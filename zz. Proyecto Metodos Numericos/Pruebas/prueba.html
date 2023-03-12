@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="main.js"></script>
+    <title>Campo de Pruebas</title>
+</head>
+    <!-- Empieza interpolación lineal -->
+    <div id="interpolacion-lineal">
+        <div id="inter-lineal-datos">
+            <h3>Interpolación Lineal</h3>
+            <form name="interLineal">
+                <!-- Datos de X -->
+                <label>X</label>
+                <input type="number" name="xLineal">
+                <label>f(X)</label>
+                <input type="text" name="fxLineal" disabled><br>
+                <!-- Datos de X0 -->
+                <label>X<sub>0</sub></label>
+                <input type="number" name="x0Lineal">
+                <label>f(X<sub>0</sub>)</label>
+                <input type="number" name="fx0Lineal"><br>
+                <!-- Datos de X1 -->
+                <label>X<sub>1</sub></label>
+                <input type="number" name="x1Lineal">
+                <label>f(X<sub>1</sub>)</label>
+                <input type="number" name="fx1Lineal"><br>
+                <!-- Botón -->
+                <input type="button" name="buttonLineal" value="Calcular" onclick="interpolacionLineal()">
+            </form>
+        </div>
+    </div>
+    <!-- Empieza interpolación cuadrática -->
+    <div id="interpolacion-Cuadratica">
+        <div id="inter-Cuadratica-datos">
+            <h3>Interpolación Cuadrática</h3>
+            <form name="interCuadratica">
+                <!-- Datos de X -->
+                <label>X</label>
+                <input type="number" id="xCuadratica">
+                <label>f(X)</label>
+                <input type="text" id="fxCuadratica" disabled><br>
+                <!-- Datos de X0 -->
+                <label>X<sub>0</sub></label>
+                <input type="number" id="x0Cuadratica">
+                <label>f(X<sub>0</sub>)</label>
+                <input type="number" id="fx0Cuadratica"><br>
+                <!-- Datos de X1 -->
+                <label>X<sub>1</sub></label>
+                <input type="number" id="x1Cuadratica">
+                <label>f(X<sub>1</sub>)</label>
+                <input type="number" id="fx1Cuadratica"><br>
+                <!-- Datos de X2 -->
+                <label>X<sub>2</sub></label>
+                <input type="number" id="x2Cuadratica">
+                <label>f(X<sub>2</sub>)</label>
+                <input type="number" id="fx2Cuadratica"><br>
+                <!-- Botón -->
+                <input type="button" name="buttonCuadratica" value="Calcular" onclick="interpolacionCuadratica()">
+            </form>
+        </div>
+    </div>
+    <div id="interpolacion-Lagrange">
+        <div id="inter-Lagrange-datos">
+            <h3>Interpolación Lagrange de Primer Orden</h3>
+            <!-- Ingreso de número de orden -->
+            <p>Ingresa el número de Orden que deseas:</p>
+            <input type="number" id="nLagrange">
+            <!-- Botón -->
+            <input type="button" name="buttonLagrange" value="Continuar" onclick="numOrdenLagrange()">
+            <!-- Despliegue de tabla para ingresar x y f(x) -->
+            <div id="inter-Lagrange-Tabla">
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
