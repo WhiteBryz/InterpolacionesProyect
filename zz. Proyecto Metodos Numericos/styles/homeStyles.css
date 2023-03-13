@@ -1,4 +1,6 @@
-/* Estilos del título principal */
+/********************************************************************
+Estilos del título principal
+********************************************************************/
 .principalTitle{
     background-color: #7F6000;
     width: 70%;
@@ -15,7 +17,9 @@
         padding-top: 10px;
     }
 
-/* Estilos para los botones del menú */
+/********************************************************************
+Estilos para los botones del menú
+********************************************************************/
 .menuBotones {
     width: 70%;
     height: 120px;
@@ -37,8 +41,18 @@
         margin-right: 18px;
         display: inline-block;
     }
+    .botonMenu:hover {
+        color: white;
+        background-color: #7F6000;
+    }
+    .botonMenu:focus {
+        color: white;
+        background-color: #7F6000;
+    }
 
-/* Estilos de despliegue de contenido */
+/********************************************************************
+Estilos de despliegue de contenido
+********************************************************************/
 .content {
     width: 70%;
     height: 500px;
@@ -47,24 +61,175 @@
     position: relative;
 }
     .inputsSeccion{
-        background-color: aqua;
         width: 50%;
         height: 100%;
         position: absolute;
     }
     .resultSeccion {
-        background-color: blue;
+        background: rgba(228, 196, 98, 0.6);
         width: 50%;
-        height: 50%;
+        height: 30%;
+        border: 5px #7F6000 solid;
         position: absolute;
         left: 50%;
-
     }
     .errorSeccion {
-        background-color: black;
         width: 50%;
-        height: 50%;
+        height: 70%;
+        border: 5px #7F6000 solid;
         position: absolute;
-        top: 50%;
+        top: 30%;
         left: 50%;
     }
+
+/********************************************************************
+Estilos para los inputs de recolección de datos
+********************************************************************/
+.tablaInputs {
+    margin: auto;
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 10px;
+}
+    /* Títulos de la tabla de los inputs */
+    .titleTable {
+        text-align: center;
+        font-size: 2.5em;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-style: oblique;
+        font-weight: 600;
+    }
+        /* Letras que acompañan a los inputs para colocar datos */
+        .letterOption {
+            font-size: 2em;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-style: italic;
+            padding: 10px;
+        }
+        .inputSelector {
+            height: 40px;
+            width: 230px;
+            border: 3px #7F6000 solid;
+            border-radius: 10px;
+            font-size: 1.7em;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 10px;
+        }
+    /* Boton de calcular la interpolación */
+    .buttonCalcular {
+        height: 50px;
+        width: 400px;
+        font-size: 2em;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        background-color: white;
+        color: #7F6000;
+        border: 3px solid #7F6000;
+        border-radius: 15px;
+        margin-top: 15px;
+    }
+        .buttonCalcular:hover {
+            background-color: #7F6000;
+            color: white;
+            border: 3px solid #7F6000;
+        }
+/********************************************************************
+Apartado del resultado de la interpolación 
+********************************************************************/
+.tablaInputResult {
+    margin: auto;
+    margin-top: 25px;
+}
+    .letterOptionResult {
+        font-size: 3em;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-style: italic;
+        padding: 10px;
+    }
+    .inputSelectorResult {
+        height: 80px;
+        width: 350px;
+        color: #7F6000;
+        background-color: white;
+        border: 3px #7F6000 solid;
+        border-radius: 10px;
+        font-size: 2.5em;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        padding: 10px;
+    }
+/********************************************************************
+Elementos exclusivos de Lagrange para seleccionar el número de orden 
+*********************************************************************/
+.tableNumOrdenLagrange {
+    margin: auto;
+    margin-top: 15px;
+}
+    .labelNumOrden {
+        padding: 5px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 1.7em;
+        color: black;
+        font-weight: 500;
+    }
+    /*Input*/
+    #nLagrange {
+        height: 40px;
+        width: 100px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 1.5em;
+        color: black;
+        background-color: white;
+        margin: 5px;
+        padding: 5px;
+        border-radius: 10px;
+    }
+    .buttonNumLagrange {
+        height: 50px;
+        width: 250px;
+        font-size: 2em;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        background-color: white;
+        color: #7F6000;
+        border: 3px solid #7F6000;
+        border-radius: 15px;
+        margin-top: 5px;
+        margin-bottom: -15px;
+    }
+        .buttonNumLagrange:hover {
+            background-color: #7F6000;
+            color: white;
+            border: 3px solid #7F6000;
+        }        
+/********************************************************************
+Elementos del apartado para calcular el error
+********************************************************************/
+.tableError {
+    margin: auto;
+    margin-top: 10px;
+}
+    .errorTitle {
+        font-size: 2em;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        padding: 3px 0;
+        text-align: center;
+    }
+    p {
+        font-size: 1.2em;
+        margin-left: 20px;
+        font-family: Arial, Helvetica, sans-serif;
+        padding: 3px 0;
+    }
+    /*Labels para los inputs*/
+    .tableError .letterOption{
+        font-size: 1.5em;
+        text-align: right;
+    }
+    /*Boton para calcular el error*/
+    .tableError .buttonNumLagrange {
+        font-size: 1.5em;
+        text-align: center;
+        margin: 5px 0;
+    }
+/*Fondo en general para las secciones y tablas*/
+.tablaInputs,.errorSeccion,.resultSeccion,.tableNumOrdenLagrange{
+    background: rgba(255, 255,255, 0.9);
+}
