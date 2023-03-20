@@ -1,6 +1,8 @@
 /*===================================================================
-Función que crea los divs que contendrán los inputs, el resultado y
-la opción de mostrar error absoluto.
+Funcion que se ejecuta en los botones del menu del HTML. Crea los <div> 
+que contendrán los inputs, el resultado y la opción de mostrar error 
+absoluto. Tiene un parametro de entrada que se otorga manualmente y va
+del 1 al 3. Cada numero hace referencia a una interpolacion distinta.
 ===================================================================*/
 function displayContentDivs(interOption) {
     // Div donde se desplegarán los contenedores
@@ -21,18 +23,21 @@ function displayContentDivs(interOption) {
     div.setAttribute("class","errorSeccion");
     div.id = "errorSeccion";
     content.appendChild(div);
-    // Condiciones para los botones del menú que despliegan los elementos de la función
+    // Condiciones para los botones del menú que despliegan elementos de las interpolaciones
     switch (interOption){
         case 1:
             displayInputsForInterpolation(2,"Lineal");
+            changeBtnMenuColor(interOption);
             displayErrorContent()
             break;
         case 2:
             displayInputsForInterpolation(3,"Cuadratica");
+            changeBtnMenuColor(interOption);
             displayErrorContent()
             break;
         case 3:
             numOrdenLagrange();
+            changeBtnMenuColor(interOption);
             displayErrorContent()
     }
 }
@@ -47,7 +52,7 @@ IDs para llamar los valores. Se debe RESPETAR la MAYUSCULA INICIAL
 del segundo parametro para que funcione adecuadamente.
 ===================================================================*/
 function displayInputsForInterpolation(num,tipo) {
-    let div, table, tbody, fila, td;
+    let div, table, tbody, fila, td,div2;
     
     // Condición que evita que elimine los valores de los inputs una vez se calcula la operación.
     if (!document.getElementById(`x${tipo}`)){
@@ -63,13 +68,13 @@ function displayInputsForInterpolation(num,tipo) {
 
         // Encabezado
         fila = document.createElement("tr");
-        
+            // X's
         td = document.createElement("td");
         td.setAttribute("colspan","2");
         td.setAttribute("class","titleTable");
         td.innerHTML = `X`;
         fila.appendChild(td);
-        
+            // f(x)'s
         td = document.createElement("td");
         td.setAttribute("colspan","2");
         td.setAttribute("class","titleTable");
@@ -79,7 +84,7 @@ function displayInputsForInterpolation(num,tipo) {
         // Insertamos encabezado a la tabla
         tbody.appendChild(fila);
 
-        // Fila de ingreso de la X y f(x) para el resultado
+        // Fila de ingreso para la incognita X
         fila = document.createElement("tr");
         // Columna del label X
         td = document.createElement("td");
@@ -120,12 +125,19 @@ function displayInputsForInterpolation(num,tipo) {
             tbody.appendChild(fila);
         }
     
-        // Boton de calcular
+        // Boton de calcular y reiniciar
         fila = document.createElement("tr");
+        
         td = document.createElement("td");
-        td.setAttribute("colspan","4");
-        td.innerHTML = `<center><input type="button" value="Calcular Interpolación" id="button${tipo}" class="buttonCalcular" onclick="interpolacion${tipo}()"><center>`;
+        td.setAttribute("colspan","2");
+        td.innerHTML = `<input type="button" value="Calcular" id="button${tipo}" class="buttonCalcular" onclick="interpolacion${tipo}()">`;
         fila.appendChild(td);
+        
+        td = document.createElement("td");
+        td.setAttribute("colspan","2");
+        td.innerHTML = `<input type="button" value="Reiniciar" id="buttonReiniciar" class="buttonCalcular" onclick="reiniciar()">`;
+        fila.appendChild(td);
+        
         tbody.appendChild(fila);
 
         // Cerramos y finalizamos tabla
@@ -156,6 +168,23 @@ function displayInputsForInterpolation(num,tipo) {
         tabla.appendChild(tbody);
         div.appendChild(tabla);
     }
+}
+
+/*===================================================================
+Función que se ejecuta en el boton de reiniciar y elimina los valores
+de todos los inputs de entrada y salida. Sirve para ingresar nuevos
+valores. NO modifica el numero de inputs con la formula Lagrange
+===================================================================*/
+function reiniciar() {
+    let allInputsOne = document.querySelectorAll(".inputSelector");
+    allInputsOne.forEach(element => {
+        element.value ="";
+    })
+    let allInputsTwo = document.querySelector(".inputSelectorResult");
+    allInputsTwo.value = "";
+
+    let x = document.getElementById("xLineal")
+    x.focus();
 }
 
 /*===================================================================
@@ -193,17 +222,13 @@ function interpolacionCuadratica() {
         x[y] = parseFloat(document.getElementById(`x${y}Cuadratica`).value);
         fx[y] = parseFloat(document.getElementById(`fx${y}Cuadratica`).value);
     }
-    let a = x.includes(NaN);
-    console.log(a);
 
     if (!x.includes(NaN) && !fx.includes(NaN) && xSup) {
         b0 = fx[0];
         b1 = (fx[1]-fx[0])/(x[1]-x[0]);
         b2 = (((fx[2]-fx[1])/(x[2]-x[1])-b1)/(x[2]-x[0]));
-        // console.log(b0,b1,b2);
         
         resultado = b0 + b1*(xSup-x[0]) + b2*(xSup-x[0])*(xSup-x[1]);
-        // console.log(resultado);
         
         // Evitamos que se imprima valor NaN en el input
         if(resultado) document.getElementById("fxResult").value = resultado.toFixed(6);
@@ -378,4 +403,30 @@ function calculateError() {
 
     document.getElementById("absoluteError").value = absoluteError.toFixed(4);
     document.getElementById("relativeError").value = `${relativeError.toFixed(2)}%`;
+}
+/*===================================================================
+Función cambia la clase de los botones del menu para cuando esten
+seleccionados.
+===================================================================*/
+function changeBtnMenuColor(noBttn) {
+    let linealButton = document.getElementById("LinealButton");
+    let cuadraticaButton = document.getElementById("CuadraticaButton");
+    let lagrangeButton = document.getElementById("LagrangeButton");
+
+    switch(noBttn) {
+        case 1:
+            linealButton.setAttribute("class", "botonMenuSelected");
+            cuadraticaButton.setAttribute("class","botonMenu");
+            lagrangeButton.setAttribute("class","botonMenu");
+            break;
+        case 2:
+            linealButton.setAttribute("class", "botonMenu");
+            cuadraticaButton.setAttribute("class","botonMenuSelected");
+            lagrangeButton.setAttribute("class","botonMenu");
+            break;
+        case 3:
+            linealButton.setAttribute("class", "botonMenu");
+            cuadraticaButton.setAttribute("class","botonMenu");
+            lagrangeButton.setAttribute("class","botonMenuSelected");
+    }
 }
