@@ -1,6 +1,8 @@
 /*===================================================================
-Función que crea los divs que contendrán los inputs, el resultado y
-la opción de mostrar error absoluto.
+Funcion que se ejecuta en los botones del menu del HTML. Crea los <div> 
+que contendrán los inputs, el resultado y la opción de mostrar error 
+absoluto. Tiene un parametro de entrada que se otorga manualmente y va
+del 1 al 3. Cada numero hace referencia a una interpolacion distinta.
 ===================================================================*/
 function displayContentDivs(interOption) {
     // Div donde se desplegarán los contenedores
@@ -21,32 +23,36 @@ function displayContentDivs(interOption) {
     div.setAttribute("class","errorSeccion");
     div.id = "errorSeccion";
     content.appendChild(div);
-    // Condiciones para los botones del menú que despliegan los elementos de la función
+    // Condiciones para los botones del menú que despliegan elementos de las interpolaciones
     switch (interOption){
         case 1:
-            interpolacionLineal();
+            displayInputsForInterpolation(2,"Lineal");
+            changeBtnMenuColor(interOption);
             displayErrorContent()
             break;
         case 2:
-            interpolacionCuadratica();
+            displayInputsForInterpolation(3,"Cuadratica");
+            changeBtnMenuColor(interOption);
             displayErrorContent()
             break;
         case 3:
             numOrdenLagrange();
+            changeBtnMenuColor(interOption);
             displayErrorContent()
     }
 }
 
 /*===================================================================
-Función que crea los inputs para las interpolaciones Lineales
-y Cuadrática. Depende de dos parámetros, el "num" dice cuántos inputs
-va a crear (ej.: x0,x1,x2), sin contar el de la incógnita x;
-y el parámetro "tipo" es para concatenar los nombres de las funciones 
-y nombres de IDs para llamar los valores. Se debe respetar la mayúscula
-inicial del tipo para que funcione adecuadamente.
+Función que crea los inputs para las interpolaciones Lineal,
+Cuadrática y Lagrange.
+Depende de dos parámetros, el "num" dice cuántos inputs
+va a crear (ej.: x0,x1,x2), sin contar la incógnita x; el parámetro 
+"tipo" es para concatenar los nombres de las funciones y nombres de 
+IDs para llamar los valores. Se debe RESPETAR la MAYUSCULA INICIAL 
+del segundo parametro para que funcione adecuadamente.
 ===================================================================*/
 function displayInputsForInterpolation(num,tipo) {
-    let div, table, tbody, fila, td;
+    let div, table, tbody, fila, td,div2;
     
     // Condición que evita que elimine los valores de los inputs una vez se calcula la operación.
     if (!document.getElementById(`x${tipo}`)){
@@ -62,13 +68,13 @@ function displayInputsForInterpolation(num,tipo) {
 
         // Encabezado
         fila = document.createElement("tr");
-        
+            // X's
         td = document.createElement("td");
         td.setAttribute("colspan","2");
         td.setAttribute("class","titleTable");
         td.innerHTML = `X`;
         fila.appendChild(td);
-        
+            // f(x)'s
         td = document.createElement("td");
         td.setAttribute("colspan","2");
         td.setAttribute("class","titleTable");
@@ -78,7 +84,7 @@ function displayInputsForInterpolation(num,tipo) {
         // Insertamos encabezado a la tabla
         tbody.appendChild(fila);
 
-        // Fila de ingreso de la X y f(x) para el resultado
+        // Fila de ingreso para la incognita X
         fila = document.createElement("tr");
         // Columna del label X
         td = document.createElement("td");
@@ -119,12 +125,19 @@ function displayInputsForInterpolation(num,tipo) {
             tbody.appendChild(fila);
         }
     
-        // Boton de calcular
+        // Boton de calcular y reiniciar
         fila = document.createElement("tr");
+        
         td = document.createElement("td");
-        td.setAttribute("colspan","4");
-        td.innerHTML = `<center><input type="button" value="Calcular Interpolación" id="button${tipo}" class="buttonCalcular" onclick="interpolacion${tipo}()"><center>`;
+        td.setAttribute("colspan","2");
+        td.innerHTML = `<input type="button" value="Calcular" id="button${tipo}" class="buttonCalcular" onclick="interpolacion${tipo}()">`;
         fila.appendChild(td);
+        
+        td = document.createElement("td");
+        td.setAttribute("colspan","2");
+        td.innerHTML = `<input type="button" value="Reiniciar" id="buttonReiniciar" class="buttonCalcular" onclick="reiniciar()">`;
+        fila.appendChild(td);
+        
         tbody.appendChild(fila);
 
         // Cerramos y finalizamos tabla
@@ -158,11 +171,26 @@ function displayInputsForInterpolation(num,tipo) {
 }
 
 /*===================================================================
+Función que se ejecuta en el boton de reiniciar y elimina los valores
+de todos los inputs de entrada y salida. Sirve para ingresar nuevos
+valores. NO modifica el numero de inputs con la formula Lagrange
+===================================================================*/
+function reiniciar() {
+    let allInputsOne = document.querySelectorAll(".inputSelector");
+    allInputsOne.forEach(element => {
+        element.value ="";
+    })
+    let allInputsTwo = document.querySelector(".inputSelectorResult");
+    allInputsTwo.value = "";
+
+    let x = document.getElementById("xLineal")
+    x.focus();
+}
+
+/*===================================================================
 Función que realiza las operaciones para la interpolación lineal.
 ===================================================================*/
 function interpolacionLineal() {
-    // Despliegue de inputs
-    displayInputsForInterpolation(2,"Lineal");
     
     let x0,x1,fx0,fx1,x,resultado;
     // Valores de x's
@@ -173,19 +201,18 @@ function interpolacionLineal() {
     fx0 = parseFloat(document.getElementById("fx0Lineal").value);
     fx1 = parseFloat(document.getElementById("fx1Lineal").value);
 
-    // console.log(x,x0,x1,fx0,fx1);
-
-    resultado = fx0 + ((fx1-fx0)/(x1-x0))*(x-x0);
-    // console.log(resultado);
-    if(resultado) document.getElementById("fxResult").value = resultado.toFixed(6);
+    // Condicion para evaluar inputs nulos
+    if (x && x0 && x1 && fx0 && fx1) {
+        resultado = fx0 + ((fx1-fx0)/(x1-x0))*(x-x0);
+        if(resultado) document.getElementById("fxResult").value = resultado.toFixed(6);
+    } else {
+        alert("Favor de Ingresar todos los valores");
+    }
 }
 /*===================================================================
 Función que realiza las operaciones para la interpolación cuadrática.
 ===================================================================*/
 function interpolacionCuadratica() {
-    // Despliegue de inputs
-    displayInputsForInterpolation(3,"Cuadratica");
-
     let x=[],fx = [],xSup,resultado;
     let b0,b1,b2;
     // Valores de las x's
@@ -196,22 +223,25 @@ function interpolacionCuadratica() {
         fx[y] = parseFloat(document.getElementById(`fx${y}Cuadratica`).value);
     }
 
-    b0 = fx[0];
-    b1 = (fx[1]-fx[0])/(x[1]-x[0]);
-    b2 = (((fx[2]-fx[1])/(x[2]-x[1])-b1)/(x[2]-x[0]));
-    // console.log(b0,b1,b2);
-    
-    resultado = b0 + b1*(xSup-x[0]) + b2*(xSup-x[0])*(xSup-x[1]);
-    // console.log(resultado);
-    
-    // Evitamos que se imprima valor NaN en el input
-    if(resultado) document.getElementById("fxResult").value = resultado.toFixed(6);
+    if (!x.includes(NaN) && !fx.includes(NaN) && xSup) {
+        b0 = fx[0];
+        b1 = (fx[1]-fx[0])/(x[1]-x[0]);
+        b2 = (((fx[2]-fx[1])/(x[2]-x[1])-b1)/(x[2]-x[0]));
+        
+        resultado = b0 + b1*(xSup-x[0]) + b2*(xSup-x[0])*(xSup-x[1]);
+        
+        // Evitamos que se imprima valor NaN en el input
+        if(resultado) document.getElementById("fxResult").value = resultado.toFixed(6);
+    } else {
+        alert("Favor de Ingresar todos los valores");
+    }
 }
 /*===================================================================
 Función que crea los elementos para que seleccione el número de orden
 que quiere realizar para la interpolación de Lagrange.
 ===================================================================*/
 function numOrdenLagrange() {
+   
     let div = document.getElementById("inputsSeccion");
 
     let table = document.createElement("table");
@@ -244,9 +274,6 @@ function numOrdenLagrange() {
 Función que despliega los inputs de la interpolación lagrange.
 ===================================================================*/
 function setInputsforLagrange() {
-    /*************************
-    El límite sera el orden 9 (10 inputs desplegables)
-    *************************/
     let numOrden = parseInt(document.getElementById("nLagrange").value);
     numOrden +=1;
     displayInputsForInterpolation(numOrden,"Lagrange")
@@ -257,32 +284,33 @@ de orden.
 ===================================================================*/
 function interpolacionLagrange() {
     let numOrden = document.getElementById("nLagrange").value;
-    // console.log("nunOrden "+numOrden)
     let xSup = parseFloat(document.getElementById("xLagrange").value);
     let operacion=0, resultado=0;
 
     let x = [];
     let fx = [];
     
+    // Ingresamos valores de los inputs
     for (let y=0;y<=numOrden;y++) {
-        x[y] = document.getElementById(`x${y}Lagrange`).value;
-        fx[y] = document.getElementById(`fx${y}Lagrange`).value;
+        x[y] = parseFloat(document.getElementById(`x${y}Lagrange`).value);
+        fx[y] = parseFloat(document.getElementById(`fx${y}Lagrange`).value);
     }
-    // console.log("x "+x)
-    // console.log("fx "+fx)
-    for (let i=0;i<=numOrden;i++) {
-        operacion = fx[i];
-        for (let j=0;j<=numOrden;j++) {
-            if (i != j) {
-                operacion *= (xSup - x[j]) / (x[i] - x[j]);
-                console.log("Operacion" + i + " "+j)
-                console.log("Operacion" + operacion)
+    
+    // Evaluamos que no hayan datos nulos y ejecutamos la operacion
+    if (!x.includes(NaN) && !fx.includes(NaN) && xSup) {
+        for (let i=0;i<=numOrden;i++) {
+            operacion = fx[i];
+            for (let j=0;j<=numOrden;j++) {
+                if (i != j) {
+                    operacion *= (xSup - x[j]) / (x[i] - x[j]);
+                }
             }
+            resultado += operacion;
         }
-        resultado += operacion;
-        // console.log("resultado" + i)
+        document.getElementById("fxResult").value = resultado.toFixed(6);
+    } else {
+        alert("Favor de Ingresar todos los valores");
     }
-    document.getElementById("fxResult").value = resultado.toFixed(6);
 }
 /*===================================================================
 Función que despliega el contenido para ingresar y calcular el error
@@ -375,4 +403,30 @@ function calculateError() {
 
     document.getElementById("absoluteError").value = absoluteError.toFixed(4);
     document.getElementById("relativeError").value = `${relativeError.toFixed(2)}%`;
+}
+/*===================================================================
+Función cambia la clase de los botones del menu para cuando esten
+seleccionados.
+===================================================================*/
+function changeBtnMenuColor(noBttn) {
+    let linealButton = document.getElementById("LinealButton");
+    let cuadraticaButton = document.getElementById("CuadraticaButton");
+    let lagrangeButton = document.getElementById("LagrangeButton");
+
+    switch(noBttn) {
+        case 1:
+            linealButton.setAttribute("class", "botonMenuSelected");
+            cuadraticaButton.setAttribute("class","botonMenu");
+            lagrangeButton.setAttribute("class","botonMenu");
+            break;
+        case 2:
+            linealButton.setAttribute("class", "botonMenu");
+            cuadraticaButton.setAttribute("class","botonMenuSelected");
+            lagrangeButton.setAttribute("class","botonMenu");
+            break;
+        case 3:
+            linealButton.setAttribute("class", "botonMenu");
+            cuadraticaButton.setAttribute("class","botonMenu");
+            lagrangeButton.setAttribute("class","botonMenuSelected");
+    }
 }
