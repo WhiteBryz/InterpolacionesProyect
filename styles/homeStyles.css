@@ -27,7 +27,7 @@ Estilos para los botones del menú
     margin-top: 35px;
     position: relative;
 }
-    .botonMenu {
+    .botonMenu,.botonMenuSelected {
         width: 30%;
         height: 90px;
         color: #7F6000;
@@ -43,7 +43,7 @@ Estilos para los botones del menú
         color: white;
         background-color: #7F6000;
     }
-    .botonMenu:focus {
+    .botonMenuSelected {
         color: white;
         background-color: #7F6000;
     }
@@ -120,7 +120,7 @@ Estilos para los inputs de recolección de datos
     /* Boton de calcular la interpolación */
     .buttonCalcular {
         height: 50px;
-        width: 400px;
+        width: 100%;
         font-size: 2em;
         font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
         background-color: white;
