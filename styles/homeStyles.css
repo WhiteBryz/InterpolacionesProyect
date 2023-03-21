@@ -117,6 +117,18 @@ Estilos para los inputs de recolección de datos
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             padding: 10px;
         }
+
+    @media screen and (max-width: 1400px) {
+        .principalTitle,.menuBotones {
+            width: 90%;
+        }
+        .content {
+            width: 90%;
+        }
+        .inputSelector {
+            width: 210px;
+        }
+    }
     /* Boton de calcular la interpolación */
     .buttonCalcular {
         height: 50px;
