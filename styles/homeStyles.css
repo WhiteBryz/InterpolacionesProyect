@@ -119,16 +119,15 @@ Estilos para los inputs de recolección de datos
         }
 
     @media screen and (max-width: 1400px) {
-        .principalTitle,.menuBotones {
+        .principalTitle,.menuBotones,.content {
             width: 90%;
-        }
-        .content {
-            width: 90%;
+            margin-top: 10px;
         }
         .inputSelector {
             width: 210px;
         }
     }
+
     /* Boton de calcular la interpolación */
     .buttonCalcular {
         height: 50px;
